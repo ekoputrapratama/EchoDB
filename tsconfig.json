@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "ES6",
+    "module": "ESNext",
+    "types": ["node"],
+    "moduleResolution": "node",
+    // "lib": ["ES2020"],
+    "lib": ["dom", "WebWorker", "es2015", "es2016", "es2017", "esnext"],
+    "importHelpers": false,
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": false,
+    "sourceMap": true,
+    "alwaysStrict": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true
+  },
+  "typeRoots": ["node_modules/@types"],
+  "include": ["src/**/*.ts", "src/**/*.js", "test", "typings/**/*.d.ts"],
+  "exclude": ["src/worker/**/*.ts"]
+}

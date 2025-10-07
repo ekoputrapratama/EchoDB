@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "packages": {
+    "echodb": {
+      "signature": "109b0e6743b3e66da70fe0668b5989ca",
+      "file": true
+    },
+    "echodb-indexeddb-adapter": {
+      "signature": "bd803ed67c1b7e1dfc5cc27ce9e3a2e6",
+      "file": true
+    }
+  }
+}

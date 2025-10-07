@@ -1,0 +1,8 @@
+{
+  "name": "project",
+  "packageManager": "yarn@4.10.3",
+  "dependencies": {
+    "echodb": "file:.yalc/echodb",
+    "echodb-indexeddb-adapter": "file:.yalc/echodb-indexeddb-adapter"
+  }
+}
