@@ -1,0 +1,16 @@
+.vscode
+examples
+tests
+src
+.yarn
+.yarnrc.yml
+.parcel-cache
+.prettierrc
+.npmrc
+.girattributes
+.editorconfig
+.env
+.env.*
+eslint.config.mjs
+karma.config.tests
+vite.config.ts
