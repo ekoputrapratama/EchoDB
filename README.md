@@ -1,6 +1,6 @@
 # 📡 EchoDB
 
-Formerly SonicDB, because sonicdb already being used on one of my flutter library so i decide to rename it. This project probably is not complete because right now i'm trying to reverse the bundled source code because i lost the original source code from my old github account.
+Formerly SonicDB, because sonicdb already being used on one of my flutter library so i decide to rename it. This project probably is not complete yet because right now i'm trying to reverse the bundled source code because i lost the original source code from my old github account.
 EchoDB is a modular JavaScript library for building fast, reliable, and developer-transparent databases with real-time sync, schema migration. Designed for developer who is familiar with MongoDB but with extra features, EchoDB gives developers full control over how data flows, syncs, and evolves.
 
 ## 🚀 Features
@@ -14,5 +14,5 @@ EchoDB is a modular JavaScript library for building fast, reliable, and develope
 ## 📦 Installation
 
 ```bash
-npm install @echodb/core
+npm install @mixaline/echodb
 ```
