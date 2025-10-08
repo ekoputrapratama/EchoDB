@@ -1,4 +1,5 @@
-import { DocumentObject, CollectionProvider } from '../DatabaseProvider';
+import { CollectionProvider } from '../databaseProvider';
+import { DocumentObject } from '../types';
 
 function isSnapshot(doc) {
   const keys = Object.keys(doc);

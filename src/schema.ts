@@ -1,31 +1,5 @@
 import isObject from 'lodash/isObject';
-
-export type SchemaColumnProps = {
-  autoIncrement?: boolean;
-  primaryKey?: boolean;
-  unique?: boolean;
-  type:
-    | typeof String
-    | typeof Number
-    | typeof Array
-    | typeof Date
-    | typeof Object;
-}
-export type SchemaProps = {
-  [name: string]:
-    | SchemaColumnProps
-    | typeof String
-    | typeof Number
-    | typeof Array
-    | typeof Date
-    | typeof Object;
-}
-export type Schemas = {
-  [name: string]: Schema;
-}
-export type SchemaOptions = {
-  timestamp?: boolean;
-}
+import { SchemaProps, Schemas, SchemaOptions } from './types';
 
 const types = [String, Object, Array, Number, Date];
 const validSchemaProperty = [
@@ -57,7 +31,7 @@ function addPrimaryKey(schema: string, column: string, autoIncrement: boolean) {
 function objectToSchemaString(columns: SchemaProps) {
   let schema = '';
   let havePrimaryKey = false;
-  let primaryKeyColumn;
+  let primaryKeyColumn: string;
   let autoIncrement = false;
   const indexes = [];
   for (const column in columns) {
@@ -176,7 +150,7 @@ export function validateSchema(schemas) {
 export function toRawObject(schemas: Schemas): any {
   const results = {};
   for (const schema in schemas) {
-      results[schema] = {
+    results[schema] = {
       raw: schemas[schema].raw,
       primaryKeyField: schemas[schema].primaryKeyField,
       options: schemas[schema].options,

@@ -1,49 +1,10 @@
 import { EventEmitter } from 'eventemitter3';
-import DatabaseProvider from './DatabaseProvider';
-import SyncProvider, { AuthOptions } from './SyncProvider';
-import Table from './Table';
+import DatabaseProvider from './databaseProvider';
+import SyncProvider from './syncProvider';
+import Table from './table';
 import { toRawObject } from './schema';
+import { AuthOptions, EchoDBOptions, SyncOptions } from './types';
 
-export type EventOptions = {
-  /**
-   * The event name for the socket to listen when server send an event to notify
-   * that there is a data changed on the server, this was also being used in collection
-   * to notify user that there is some change made in the collection.
-   */
-  changeEventName?: string;
-  /**
-   * The event name for the socket to listen when server send an event to notify
-   * that there is a data removed on the server, this was also being used in collection
-   * to notify user that there is some change made in the collection.
-   */
-  removeEventName?: string;
-  /**
-   * The event name for the socket to listen when server send an event to notify
-   * that there is a new data added on the server, this was also being used in collection
-   * to notify user that there is some change made in the collection.
-   */
-  addEventName?: string;
-  /**
-   * The event name for the socket to listen when server send all data to be fetched
-   * in the client
-   */
-  fetchEventName?: string;
-}
-
-export type SyncOptions = {
-  url?: string;
-  enabled?: boolean;
-  connectionType?: string;
-  events?: EventOptions;
-  adapter?: SyncProvider;
-  autoStart?: boolean;
-  interval?: number;
-}
-
-export type EchoDBOptions = {
-  adapter: DatabaseProvider;
-  sync?: SyncOptions;
-}
 export default class EchoDB extends EventEmitter {
   provider: DatabaseProvider;
   syncAdapter: SyncProvider;

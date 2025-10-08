@@ -4,15 +4,9 @@ import Schema from '../schema';
 import isNumber from 'lodash/isNumber';
 import moment from 'moment';
 import isObject from 'lodash/isObject';
+import { PopulateObject } from '../types';
 
-export type PopulateObject = {
-  localField: string;
-  foreignField: string;
-  ref: string;
-  as?: string;
-}
-
-const validSchemaProperty = [
+export const validSchemaProperty = [
   'unique',
   'primaryKey',
   'autoIncrement',
@@ -42,7 +36,7 @@ export function validatePopulate(obj: object & PopulateObject) {
   if (!obj.hasOwnProperty('foreignField'))
     throw new Error('populate should have foreignField property');
   if (!obj.hasOwnProperty('ref'))
-    throw new Error('populate should have from property');
+    throw new Error('populate should have ref property');
 }
 
 export function validatePopulates(arr: PopulateObject[]) {
@@ -50,7 +44,6 @@ export function validatePopulates(arr: PopulateObject[]) {
     validatePopulate(obj);
   }
 }
-
 
 export function validateData(data: any, schema: any) {
   if (data === null || data === 'undefined') {
