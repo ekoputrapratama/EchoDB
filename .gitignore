@@ -1,0 +1,7 @@
+.yarn
+.yalc
+.fusebox
+.parcel-cache
+.env.*
+.env
+node_modules
