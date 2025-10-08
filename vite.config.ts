@@ -2,17 +2,19 @@
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import conditionalImport from 'vite-plugin-conditional-import';
+import ts from 'typescript';
 
-export default defineConfig(() => { 
+export default defineConfig(() => {
   const isUmdBuild = process.env.VITE_BUILD_FORMAT === 'umd';
   const isEs = process.env.VITE_BUILD_FORMAT === 'es';
   return {
     define: {
       'process.env': {
-        TARGET: process.env.TARGET,
-        BROWSER: process.env.VITE_BUILD_FORMAT === 'umd' || process.env.VITE_BUILD_FORMAT === 'es',
-        FORMAT: process.env.VITE_BUILD_FORMAT
-      }
+        BROWSER:
+          process.env.VITE_BUILD_FORMAT === 'umd' ||
+          process.env.VITE_BUILD_FORMAT === 'es',
+        FORMAT: process.env.VITE_BUILD_FORMAT,
+      },
     },
     build: {
       minify: false,
@@ -25,15 +27,18 @@ export default defineConfig(() => {
       // Optional: Exclude Node.js built-in modules from being bundled
       // For example, if your library uses 'path' or 'fs'
       rollupOptions: {
-        external: ['path', 'fs', 'dns'], 
+        external: ['path', 'fs', 'dns'],
       },
     },
     plugins: [
       conditionalImport({
         currentEnv: isUmdBuild || isEs ? 'client' : 'server',
-        envs:['client', 'server']
+        envs: ['client', 'server'],
       }),
-      dts({ rollupTypes: true })
-    ]
-  }
+      dts({
+        rollupTypes: true,
+        // compilerOptions: { module: ts.ModuleKind.ESNext },
+      }),
+    ],
+  };
 });

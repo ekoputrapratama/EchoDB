@@ -26,17 +26,16 @@ export function createWorkerImportScript(scriptFn: Function) {
   return url;
 }
 
-export function isDate(value: any){
+export function isDate(value: any) {
   return (
-    Object.prototype.toString.call(value) === '[object Date]' &&
-    !isNaN(value)
+    Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value)
   );
 }
 
 export function isWorkerAvailable() {
   let satisfied = true;
 
-  if (typeof window === 'undefined' || typeof Worker === 'undefined') {
+  if (typeof window === 'undefined' && typeof Worker !== 'undefined') {
     const keys = Object.keys(Worker.prototype);
     if (keys.length < 4) satisfied = false;
   }
@@ -54,7 +53,9 @@ export function isNodejs() {
 }
 
 export function isBrowser() {
-  return new Function('try {return this===window;}catch(e){ return false;}');
+  return new Function(
+    'try {return this===window;}catch(e){ return false;}'
+  ).call(undefined);
 }
 
 export function workerScriptPath() {
@@ -76,7 +77,11 @@ export function workerScriptPath() {
 }
 
 export function isInWorker() {
-  return typeof document === 'undefined' && typeof window === 'undefined';
+  return (
+    typeof document === 'undefined' &&
+    typeof window === 'undefined' &&
+    typeof global === 'undefined'
+  );
 }
 
 export function isNestedQuery(spec: any) {

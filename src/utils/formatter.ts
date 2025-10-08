@@ -2,6 +2,15 @@ import moment from 'moment';
 import { isDate } from './util';
 import { isFirestoreTimestamp } from './validate';
 
+/**
+ *
+ *
+ * @export
+ * @param {*} value
+ * @param {string} format
+ * @param {string} separator
+ * @return {*}
+ */
 export function formatNumber(value: any, format: string, separator: string) {
   let str = value + '';
   const splittedFormat = format.split(separator);
@@ -29,6 +38,8 @@ export function formatDate(value: any, format: string) {
   } else if (isFirestoreTimestamp(date)) {
     const dt = date.toDate();
     date = dt.getFullYear() + '/' + dt.getMonth() + '/' + dt.getDate();
+  } else if (moment(value).format() !== 'Invalid date') {
+    date = moment(value);
   }
 
   return moment(date, 'YYYY/MM/DD').format(format);

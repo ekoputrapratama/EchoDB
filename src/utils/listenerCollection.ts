@@ -4,7 +4,6 @@
  * ListenerCollection can hold array of listeners and fire them.
  * Each listener needs to have a key.
  */
-// @ts-ignore
 import forEachSeries from 'async/eachSeries';
 
 export default class ListenerCollection {
@@ -39,7 +38,7 @@ export default class ListenerCollection {
    * @param {Function} listener
    */
   insert(indexOrCondition: any, key: string, context: any, listener: Function) {
-    var listenerOpts = {
+    const listenerOpts = {
       key: key,
       fn: listener || context,
       context: listener === null ? this : context,
@@ -49,9 +48,9 @@ export default class ListenerCollection {
       return this._listeners.splice(indexOrCondition, 0, listenerOpts);
     }
 
-    var afterInsertIndex = null;
-    var beforeInsertIndex = null;
-    for (var i = 0; i < this._listeners.length; i++) {
+    let afterInsertIndex = null;
+    let beforeInsertIndex = null;
+    for (let i = 0; i < this._listeners.length; i++) {
       if (this._listeners[i].key === indexOrCondition.after) {
         afterInsertIndex = i + 1;
       }
@@ -61,7 +60,7 @@ export default class ListenerCollection {
       }
     }
 
-    var index =
+    const index =
       afterInsertIndex !== null
         ? afterInsertIndex
         : beforeInsertIndex !== null
@@ -98,17 +97,17 @@ export default class ListenerCollection {
    * Fires listeners and returns value composed from all boolean results into the single bool
    * @returns {Promise<Boolean>}
    */
-  fireAndJoinResults(): Promise<boolean> {
-    return this.fire.apply(this, arguments).then(function (results) {
-      var successes = results.filter(function (r) {
+  fireAndJoinResults(...rest): Promise<boolean> {
+    return this.fire.apply(this, ...rest).then(function (results) {
+      const successes = results.filter(function (r) {
         return r === true;
       });
 
-      var failures = results.filter(function (r) {
+      const failures = results.filter(function (r) {
         return r === false;
       });
 
-      var dontCares = results.filter(function (r) {
+      const dontCares = results.filter(function (r) {
         return r === null || r === undefined;
       });
 
@@ -141,17 +140,17 @@ export default class ListenerCollection {
    * @returns {Promise<any>}
    */
   fire(...args): Promise<any> {
-    var self = this;
+    // const self = this;
 
-    args = Array.prototype.slice.call(arguments, 0);
+    args = Array.prototype.slice.call(args, 0);
 
-    var usePromises =
+    const usePromises =
       args.length === 0 || !(typeof args[args.length - 1] === 'function');
 
     function mapSeries(arr, iterator) {
       // create a empty promise to start our series (so we can use `then`)
-      var currentPromise = Promise.resolve();
-      var promises = arr.map(function (el) {
+      let currentPromise = Promise.resolve();
+      const promises = arr.map(function (el) {
         return (currentPromise = currentPromise.then(function () {
           // execute the next function after the previous has resolved successfully
           return iterator(el);
@@ -162,19 +161,19 @@ export default class ListenerCollection {
     }
 
     function applyHook(l, hookArrayNane, outerArgs) {
-      self[hookArrayNane].forEach(function (p) {
+      this[hookArrayNane].forEach(function (p) {
         p.apply(l, outerArgs);
       });
     }
 
     if (usePromises) {
-      var results = [];
+      const results = [];
       return mapSeries(this._listeners, function (l) {
-        var currentArgs = args.slice(0);
+        const currentArgs = args.slice(0);
         applyHook(l, '_pre', currentArgs);
 
         try {
-          var valOrPromise = l.fn.apply(l.context, currentArgs);
+          const valOrPromise = l.fn.apply(l.context, currentArgs);
           return Promise.resolve(valOrPromise)
             .then(function (val) {
               applyHook(l, '_post', currentArgs);
@@ -205,11 +204,11 @@ export default class ListenerCollection {
     return forEachSeries(
       this._listeners,
       function (l, next) {
-        var currentArgs = args.slice(0);
+        const currentArgs = args.slice(0);
         currentArgs.push(next);
         l.fn.apply(l.context, currentArgs);
       },
-      arguments[arguments.length - 1]
+      args[args.length - 1]
     );
   }
 }

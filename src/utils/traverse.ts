@@ -13,12 +13,14 @@ import isUndefined from 'lodash/isUndefined';
  * @param item
  */
 export default function traverseFilter<T>(obj: T, queries, item): T {
-  for (let i in obj) {
+  for (const i in obj) {
     if (!isNull(obj[i]) && !isUndefined(obj[i]) && isObject(obj[i])) {
       traverseFilter(obj[i], queries, item);
     } else {
+      // eslint-disable-next-line prefer-const
       let query = queries[i];
       if (query) {
+        /* empty */
       }
       // if (!(obj[i] instanceof Types.ObjectId) && (isString(obj[i]) || isNumber(obj[i]))) {
       //   obj[i] = Types.ObjectId((obj[i] as any)) as any;
