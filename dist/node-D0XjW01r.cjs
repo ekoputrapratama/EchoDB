@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const dns = require("dns");
-const index = require("./index-7MCs_ONw.cjs");
+const index = require("./index-CLUaXSTe.cjs");
 class NetworkProvider extends index.EventEmitter {
   constructor() {
     super();

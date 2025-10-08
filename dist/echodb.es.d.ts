@@ -1,6 +1,6 @@
 import { EventEmitter } from 'eventemitter3';
 
-declare type AuthOptions = {
+export declare type AuthOptions = {
     username?: string;
     email?: string;
     password: string;
@@ -15,9 +15,9 @@ export declare abstract class CollectionProvider<T> extends EventEmitter {
     abstract drop(): Promise<any>;
 }
 
-declare function createWorker(workerFunc: any, imports?: Function[]): Worker;
+export declare function createWorker(workerFunc: any, imports?: Function[]): Worker;
 
-declare function createWorkerImportScript(scriptFn: Function): string;
+export declare function createWorkerImportScript(scriptFn: Function): string;
 
 export declare abstract class CursorProvider<T> {
     abstract get(): Promise<T>;
@@ -35,14 +35,14 @@ export declare abstract class DatabaseProvider extends EventEmitter {
     options: any;
     syncAdapter: SyncProvider;
     private _context;
-    abstract context: EchoDB;
+    context: EchoDB;
     abstract collection<T>(name: string): CollectionProvider<T>;
     abstract close(): void;
     abstract drop(name?: string): Promise<any>;
     abstract readonly isOpen: boolean;
 }
 
-declare type DocumentObject = {
+export declare type DocumentObject = {
     id?: any;
     updatedAt?: number | Date;
     createdAt?: number | Date;
@@ -50,7 +50,7 @@ declare type DocumentObject = {
     delete?: () => Promise<void>;
 };
 
-declare type DocumentObjectCondition = {
+export declare type DocumentObjectCondition = {
     id?: string;
     [key: string]: any;
 };
@@ -69,12 +69,12 @@ declare class EchoDB extends EventEmitter {
 }
 export default EchoDB;
 
-declare type EchoDBOptions = {
+export declare type EchoDBOptions = {
     adapter: DatabaseProvider;
     sync?: SyncOptions;
 };
 
-declare type EventOptions = {
+export declare type EventOptions = {
     /**
      * The event name for the socket to listen when server send an event to notify
      * that there is a data changed on the server, this was also being used in collection
@@ -100,19 +100,19 @@ declare type EventOptions = {
     fetchEventName?: string;
 };
 
-declare function isBrowser(): Function;
+export declare function isBrowser(): any;
 
-declare function isDate(value: any): boolean;
+export declare function isDate(value: any): boolean;
 
-declare function isFirestoreTimestamp(obj: any): boolean;
+export declare function isFirestoreTimestamp(obj: any): boolean;
 
-declare function isInWorker(): boolean;
+export declare function isInWorker(): boolean;
 
-declare function isNestedQuery(spec: any): boolean;
+export declare function isNestedQuery(spec: any): boolean;
 
-declare function isNodejs(): boolean;
+export declare function isNodejs(): boolean;
 
-declare function isWorkerAvailable(): boolean;
+export declare function isWorkerAvailable(): boolean;
 
 export declare class ListenerCollection {
     _listeners: any[];
@@ -151,7 +151,7 @@ export declare class ListenerCollection {
      * Fires listeners and returns value composed from all boolean results into the single bool
      * @returns {Promise<Boolean>}
      */
-    fireAndJoinResults(): Promise<boolean>;
+    fireAndJoinResults(...rest: any[]): Promise<boolean>;
     /**
      * Fire registered listeners in sequence and returns a promise containing wrapping an array of all
      * individual results.
@@ -161,7 +161,11 @@ export declare class ListenerCollection {
     fire(...args: any[]): Promise<any>;
 }
 
-export declare function loadNetworkProvider(): Promise<any>;
+export declare function loadNetworkProvider(): Promise<NetworkProvider>;
+
+export declare type NetworkProvider = {
+    connected: boolean;
+} & EventEmitter;
 
 /**
  *
@@ -181,13 +185,7 @@ export declare function loadNetworkProvider(): Promise<any>;
  */
 export declare function normalizeSchemas(schemas: Schemas): any;
 
-export declare namespace ObjectUtil {
-    export {
-        wrapObject
-    }
-}
-
-declare type PopulateObject = {
+export declare type PopulateObject = {
     localField: string;
     foreignField: string;
     ref: string;
@@ -205,26 +203,26 @@ export declare class Schema {
     toMysqlTableQuery(): void;
 }
 
-declare type SchemaColumnProps = {
+export declare type SchemaColumnProps = {
     autoIncrement?: boolean;
     primaryKey?: boolean;
     unique?: boolean;
     type: typeof String | typeof Number | typeof Array | typeof Date | typeof Object;
 };
 
-declare type SchemaOptions = {
+export declare type SchemaOptions = {
     timestamp?: boolean;
 };
 
-declare type SchemaProps = {
+export declare type SchemaProps = {
     [name: string]: SchemaColumnProps | typeof String | typeof Number | typeof Array | typeof Date | typeof Object;
 };
 
-declare type Schemas = {
+export declare type Schemas = {
     [name: string]: Schema;
 };
 
-declare type SyncOptions = {
+export declare type SyncOptions = {
     url?: string;
     enabled?: boolean;
     connectionType?: string;
@@ -239,6 +237,7 @@ export declare abstract class SyncProvider extends EventEmitter {
     dbName: string;
     schemas: any;
     context: EchoDB;
+    private lockManager;
     abstract nextId(name: string): any;
     abstract start(): void;
     abstract stop(): void;
@@ -251,7 +250,7 @@ export declare abstract class SyncProvider extends EventEmitter {
     get localAdapter(): DatabaseProvider;
 }
 
-declare class Table<T> {
+export declare class Table<T> {
     name: string;
     collection: CollectionProvider<T>;
     constructor(name: string, provider: DatabaseProvider);
@@ -272,62 +271,20 @@ declare class Table<T> {
  */
 export declare function toRawObject(schemas: Schemas): any;
 
-export declare namespace traverse {
-    export {
-        traverseFilter as default
-    }
-}
+export declare function validateData(data: any, schema: any): void;
 
-/**
- * traverseFilter({
- *
- * })
- * @param obj
- * @param queries
- * @param item
- */
-declare function traverseFilter<T>(obj: T, queries: any, item: any): T;
+export declare function validatePopulate(obj: object & PopulateObject): void;
 
-export declare namespace utils {
-    export {
-        createWorker,
-        createWorkerImportScript,
-        isDate,
-        isWorkerAvailable,
-        isNodejs,
-        isBrowser,
-        workerScriptPath,
-        isInWorker,
-        isNestedQuery
-    }
-}
-
-export declare namespace validate {
-    export {
-        validateSchemaProps,
-        validateSchema_2 as validateSchema,
-        validatePopulate,
-        validatePopulates,
-        validateData,
-        isFirestoreTimestamp,
-        PopulateObject
-    }
-}
-
-declare function validateData(data: any, schema: any): void;
-
-declare function validatePopulate(obj: object & PopulateObject): void;
-
-declare function validatePopulates(arr: PopulateObject[]): void;
+export declare function validatePopulates(arr: PopulateObject[]): void;
 
 export declare function validateSchema(schemas: any): void;
 
-declare function validateSchema_2(schemas: Record<string, Schema>): void;
+export declare function validateSchemaProps(keys: Array<string>): void;
 
-declare function validateSchemaProps(keys: Array<string>): void;
+export declare const validSchemaProperty: string[];
 
-declare function workerScriptPath(): string;
+export declare function workerScriptPath(): string;
 
-declare function wrapObject<T>(obj: any, collection: CollectionProvider<T> | any): T & DocumentObject;
+export declare function wrapObject<T>(obj: any, collection: CollectionProvider<T> | any): T & DocumentObject;
 
 export { }

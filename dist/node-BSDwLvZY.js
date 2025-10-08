@@ -1,5 +1,5 @@
 import dns from "dns";
-import { E as EventEmitter } from "./index-j5lBaDr1.js";
+import { E as EventEmitter } from "./index-BLFV6BMf.js";
 class NetworkProvider extends EventEmitter {
   constructor() {
     super();

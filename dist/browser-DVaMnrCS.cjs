@@ -1,9 +1,11 @@
-import { E as EventEmitter, i as isInWorker } from "./index-j5lBaDr1.js";
-class NetworkProvider extends EventEmitter {
+"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const index = require("./index-CLUaXSTe.cjs");
+class NetworkProvider extends index.EventEmitter {
   constructor() {
     super();
     this.connected = navigator.onLine;
-    if (!isInWorker()) {
+    if (!index.isInWorker()) {
       window.addEventListener("online", () => {
         this.connected = true;
         this.emit("online");
@@ -15,6 +17,4 @@ class NetworkProvider extends EventEmitter {
     }
   }
 }
-export {
-  NetworkProvider as default
-};
+exports.default = NetworkProvider;

@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const index = require("./index-7MCs_ONw.cjs");
-class NetworkProvider extends index.EventEmitter {
+import { E as EventEmitter, i as isInWorker } from "./index-BLFV6BMf.js";
+class NetworkProvider extends EventEmitter {
   constructor() {
     super();
     this.connected = navigator.onLine;
-    if (!index.isInWorker()) {
+    if (!isInWorker()) {
       window.addEventListener("online", () => {
         this.connected = true;
         this.emit("online");
@@ -17,4 +15,6 @@ class NetworkProvider extends index.EventEmitter {
     }
   }
 }
-exports.default = NetworkProvider;
+export {
+  NetworkProvider as default
+};

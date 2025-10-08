@@ -191,20 +191,6 @@ function requireEventemitter3() {
 }
 var eventemitter3Exports = requireEventemitter3();
 const EventEmitter = /* @__PURE__ */ getDefaultExportFromCjs(eventemitter3Exports);
-class SyncProvider extends EventEmitter {
-  set localAdapter(val) {
-    this._localAdapter = val;
-  }
-  get localAdapter() {
-    return this._localAdapter;
-  }
-}
-class CursorProvider {
-}
-class CollectionProvider extends EventEmitter {
-}
-class DatabaseProvider extends EventEmitter {
-}
 class Table {
   constructor(name, provider) {
     this.name = name;
@@ -348,7 +334,7 @@ function normalize(schemas) {
   }
   return results;
 }
-function validateSchema$1(schemas) {
+function validateSchema(schemas) {
   for (const key in schemas) {
     if (!(schemas[key] instanceof Schema)) {
       throw new Error(`${key} schema is not valid`);
@@ -436,6 +422,20 @@ class EchoDB extends EventEmitter {
   get isOpen() {
     return this.provider.isOpen;
   }
+}
+class SyncProvider extends EventEmitter {
+  set localAdapter(val) {
+    this._localAdapter = val;
+  }
+  get localAdapter() {
+    return this._localAdapter;
+  }
+}
+class CursorProvider {
+}
+class CollectionProvider extends EventEmitter {
+}
+class DatabaseProvider extends EventEmitter {
 }
 var _freeGlobal;
 var hasRequired_freeGlobal;
@@ -611,7 +611,7 @@ function isObjectEmpty(obj) {
     return true;
   }
 }
-function isUndefined$1(input) {
+function isUndefined(input) {
   return input === void 0;
 }
 function isNumber(input) {
@@ -715,41 +715,41 @@ function createInvalid(flags) {
 var momentProperties = hooks.momentProperties = [], updateInProgress = false;
 function copyConfig(to2, from2) {
   var i, prop, val, momentPropertiesLen = momentProperties.length;
-  if (!isUndefined$1(from2._isAMomentObject)) {
+  if (!isUndefined(from2._isAMomentObject)) {
     to2._isAMomentObject = from2._isAMomentObject;
   }
-  if (!isUndefined$1(from2._i)) {
+  if (!isUndefined(from2._i)) {
     to2._i = from2._i;
   }
-  if (!isUndefined$1(from2._f)) {
+  if (!isUndefined(from2._f)) {
     to2._f = from2._f;
   }
-  if (!isUndefined$1(from2._l)) {
+  if (!isUndefined(from2._l)) {
     to2._l = from2._l;
   }
-  if (!isUndefined$1(from2._strict)) {
+  if (!isUndefined(from2._strict)) {
     to2._strict = from2._strict;
   }
-  if (!isUndefined$1(from2._tzm)) {
+  if (!isUndefined(from2._tzm)) {
     to2._tzm = from2._tzm;
   }
-  if (!isUndefined$1(from2._isUTC)) {
+  if (!isUndefined(from2._isUTC)) {
     to2._isUTC = from2._isUTC;
   }
-  if (!isUndefined$1(from2._offset)) {
+  if (!isUndefined(from2._offset)) {
     to2._offset = from2._offset;
   }
-  if (!isUndefined$1(from2._pf)) {
+  if (!isUndefined(from2._pf)) {
     to2._pf = getParsingFlags(from2);
   }
-  if (!isUndefined$1(from2._locale)) {
+  if (!isUndefined(from2._locale)) {
     to2._locale = from2._locale;
   }
   if (momentPropertiesLen > 0) {
     for (i = 0; i < momentPropertiesLen; i++) {
       prop = momentProperties[i];
       val = from2[prop];
-      if (!isUndefined$1(val)) {
+      if (!isUndefined(val)) {
         to2[prop] = val;
       }
     }
@@ -2116,7 +2116,7 @@ function loadLocale(name) {
 function getSetGlobalLocale(key, values) {
   var data;
   if (key) {
-    if (isUndefined$1(values)) {
+    if (isUndefined(values)) {
       data = getLocale(key);
     } else {
       data = defineLocale(key, values);
@@ -2708,7 +2708,7 @@ function prepareConfig(config) {
 }
 function configFromInput(config) {
   var input = config._i;
-  if (isUndefined$1(input)) {
+  if (isUndefined(input)) {
     config._d = new Date(hooks.now());
   } else if (isDate$1(input)) {
     config._d = new Date(input.valueOf());
@@ -3001,7 +3001,7 @@ function isDaylightSavingTime() {
   return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset();
 }
 function isDaylightSavingTimeShifted() {
-  if (!isUndefined$1(this._isDSTShifted)) {
+  if (!isUndefined(this._isDSTShifted)) {
     return this._isDSTShifted;
   }
   var c = {}, other;
@@ -4585,20 +4585,13 @@ function validateSchemaProps(keys2) {
     }
   });
 }
-function validateSchema(schemas) {
-  for (const key in schemas) {
-    if (!(schemas[key] instanceof Schema)) {
-      throw new Error(key + " schema is not valid schema");
-    }
-  }
-}
 function validatePopulate(obj) {
   if (!obj.hasOwnProperty("localField"))
     throw new Error("populate should have localField property");
   if (!obj.hasOwnProperty("foreignField"))
     throw new Error("populate should have foreignField property");
   if (!obj.hasOwnProperty("ref"))
-    throw new Error("populate should have from property");
+    throw new Error("populate should have ref property");
 }
 function validatePopulates(arr) {
   for (const obj of arr) {
@@ -4656,15 +4649,6 @@ function isFirestoreTimestamp(obj) {
   const keys2 = Object.keys(obj);
   return keys2.includes("nanoseconds") && keys2.includes("seconds") && typeof obj.toDate === "function";
 }
-const validate = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  isFirestoreTimestamp,
-  validateData,
-  validatePopulate,
-  validatePopulates,
-  validateSchema,
-  validateSchemaProps
-}, Symbol.toStringTag, { value: "Module" }));
 function isSnapshot(doc) {
   const keys2 = Object.keys(doc);
   return keys2.includes("_document") && keys2.includes("_key") && keys2.includes("_firestore");
@@ -4691,10 +4675,6 @@ function wrapObject(obj, collection) {
     }
   });
 }
-const objects = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  wrapObject
-}, Symbol.toStringTag, { value: "Module" }));
 function createWorker(workerFunc, imports = []) {
   if (!(workerFunc instanceof Function)) {
     throw new Error("Argument must be function");
@@ -4726,7 +4706,7 @@ function isDate(value) {
 }
 function isWorkerAvailable() {
   let satisfied = true;
-  if (typeof window === "undefined" || typeof Worker === "undefined") {
+  if (typeof window === "undefined" && typeof Worker !== "undefined") {
     const keys2 = Object.keys(Worker.prototype);
     if (keys2.length < 4) satisfied = false;
   }
@@ -4739,7 +4719,9 @@ function isNodejs() {
   );
 }
 function isBrowser() {
-  return new Function("try {return this===window;}catch(e){ return false;}");
+  return new Function(
+    "try {return this===window;}catch(e){ return false;}"
+  ).call(void 0);
 }
 function workerScriptPath() {
   const currentScript = document.querySelector(
@@ -4759,7 +4741,7 @@ function workerScriptPath() {
   return "/" + path.join("/") + "/worker.js";
 }
 function isInWorker() {
-  return typeof document === "undefined" && typeof window === "undefined";
+  return typeof document === "undefined" && typeof window === "undefined" && typeof global === "undefined";
 }
 function isNestedQuery(spec) {
   return Object.keys(spec).some((key, index, keys2) => {
@@ -4774,58 +4756,6 @@ function isNestedQuery(spec) {
     }
   });
 }
-const util = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  createWorker,
-  createWorkerImportScript,
-  isBrowser,
-  isDate,
-  isInWorker,
-  isNestedQuery,
-  isNodejs,
-  isWorkerAvailable,
-  workerScriptPath
-}, Symbol.toStringTag, { value: "Module" }));
-var isNull_1;
-var hasRequiredIsNull;
-function requireIsNull() {
-  if (hasRequiredIsNull) return isNull_1;
-  hasRequiredIsNull = 1;
-  function isNull2(value) {
-    return value === null;
-  }
-  isNull_1 = isNull2;
-  return isNull_1;
-}
-var isNullExports = requireIsNull();
-const isNull = /* @__PURE__ */ getDefaultExportFromCjs(isNullExports);
-var isUndefined_1;
-var hasRequiredIsUndefined;
-function requireIsUndefined() {
-  if (hasRequiredIsUndefined) return isUndefined_1;
-  hasRequiredIsUndefined = 1;
-  function isUndefined2(value) {
-    return value === void 0;
-  }
-  isUndefined_1 = isUndefined2;
-  return isUndefined_1;
-}
-var isUndefinedExports = requireIsUndefined();
-const isUndefined = /* @__PURE__ */ getDefaultExportFromCjs(isUndefinedExports);
-function traverseFilter(obj, queries, item) {
-  for (let i in obj) {
-    if (!isNull(obj[i]) && !isUndefined(obj[i]) && isObject$1(obj[i])) {
-      traverseFilter(obj[i], queries);
-    } else {
-      queries[i];
-    }
-  }
-  return obj;
-}
-const traverse = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: traverseFilter
-}, Symbol.toStringTag, { value: "Module" }));
 var eachSeries = { exports: {} };
 var eachLimit = { exports: {} };
 var eachOfLimit = { exports: {} };
@@ -5409,7 +5339,7 @@ class ListenerCollection {
    * @param {Function} listener
    */
   insert(indexOrCondition, key, context, listener) {
-    var listenerOpts = {
+    const listenerOpts = {
       key,
       fn: listener || context,
       context: listener === null ? this : context
@@ -5417,9 +5347,9 @@ class ListenerCollection {
     if (!isNaN(indexOrCondition)) {
       return this._listeners.splice(indexOrCondition, 0, listenerOpts);
     }
-    var afterInsertIndex = null;
-    var beforeInsertIndex = null;
-    for (var i = 0; i < this._listeners.length; i++) {
+    let afterInsertIndex = null;
+    let beforeInsertIndex = null;
+    for (let i = 0; i < this._listeners.length; i++) {
       if (this._listeners[i].key === indexOrCondition.after) {
         afterInsertIndex = i + 1;
       }
@@ -5427,7 +5357,7 @@ class ListenerCollection {
         beforeInsertIndex = i;
       }
     }
-    var index = afterInsertIndex !== null ? afterInsertIndex : beforeInsertIndex !== null ? beforeInsertIndex : this._listeners.length;
+    const index = afterInsertIndex !== null ? afterInsertIndex : beforeInsertIndex !== null ? beforeInsertIndex : this._listeners.length;
     this._listeners.splice(index, 0, listenerOpts);
   }
   /**
@@ -5455,15 +5385,15 @@ class ListenerCollection {
    * Fires listeners and returns value composed from all boolean results into the single bool
    * @returns {Promise<Boolean>}
    */
-  fireAndJoinResults() {
-    return this.fire.apply(this, arguments).then(function(results) {
-      var successes = results.filter(function(r) {
+  fireAndJoinResults(...rest) {
+    return this.fire.apply(this, ...rest).then(function(results) {
+      const successes = results.filter(function(r) {
         return r === true;
       });
-      var failures = results.filter(function(r) {
+      const failures = results.filter(function(r) {
         return r === false;
       });
-      var dontCares = results.filter(function(r) {
+      const dontCares = results.filter(function(r) {
         return r === null || r === void 0;
       });
       if (successes.length && successes.length + dontCares.length === results.length) {
@@ -5485,12 +5415,11 @@ class ListenerCollection {
    * @returns {Promise<any>}
    */
   fire(...args) {
-    var self2 = this;
-    args = Array.prototype.slice.call(arguments, 0);
-    var usePromises = args.length === 0 || !(typeof args[args.length - 1] === "function");
+    args = Array.prototype.slice.call(args, 0);
+    const usePromises = args.length === 0 || !(typeof args[args.length - 1] === "function");
     function mapSeries(arr, iterator2) {
-      var currentPromise = Promise.resolve();
-      var promises = arr.map(function(el) {
+      let currentPromise = Promise.resolve();
+      const promises = arr.map(function(el) {
         return currentPromise = currentPromise.then(function() {
           return iterator2(el);
         });
@@ -5498,17 +5427,17 @@ class ListenerCollection {
       return Promise.all(promises);
     }
     function applyHook(l, hookArrayNane, outerArgs) {
-      self2[hookArrayNane].forEach(function(p) {
+      this[hookArrayNane].forEach(function(p) {
         p.apply(l, outerArgs);
       });
     }
     if (usePromises) {
-      var results = [];
+      const results = [];
       return mapSeries(this._listeners, function(l) {
-        var currentArgs = args.slice(0);
+        const currentArgs = args.slice(0);
         applyHook(l, "_pre", currentArgs);
         try {
-          var valOrPromise = l.fn.apply(l.context, currentArgs);
+          const valOrPromise = l.fn.apply(l.context, currentArgs);
           return Promise.resolve(valOrPromise).then(function(val) {
             applyHook(l, "_post", currentArgs);
             results.push(val);
@@ -5531,20 +5460,20 @@ class ListenerCollection {
     return forEachSeries(
       this._listeners,
       function(l, next) {
-        var currentArgs = args.slice(0);
+        const currentArgs = args.slice(0);
         currentArgs.push(next);
         l.fn.apply(l.context, currentArgs);
       },
-      arguments[arguments.length - 1]
+      args[args.length - 1]
     );
   }
 }
 async function loadNetworkProvider() {
   let module2;
   if (typeof window !== "undefined") {
-    module2 = await Promise.resolve().then(() => require("./browser-KLumhW7d.cjs"));
+    module2 = await Promise.resolve().then(() => require("./browser-DVaMnrCS.cjs"));
   } else {
-    module2 = await Promise.resolve().then(() => require("./node-DgQXqbtm.cjs"));
+    module2 = await Promise.resolve().then(() => require("./node-D0XjW01r.cjs"));
   }
   return module2;
 }
@@ -5559,12 +5488,24 @@ exports.EventEmitter = EventEmitter;
 exports.ListenerCollection = ListenerCollection;
 exports.Schema = Schema;
 exports.SyncProvider = SyncProvider;
+exports.Table = Table;
+exports.createWorker = createWorker;
+exports.createWorkerImportScript = createWorkerImportScript;
+exports.isBrowser = isBrowser;
+exports.isDate = isDate;
+exports.isFirestoreTimestamp = isFirestoreTimestamp;
 exports.isInWorker = isInWorker;
+exports.isNestedQuery = isNestedQuery;
+exports.isNodejs = isNodejs;
+exports.isWorkerAvailable = isWorkerAvailable;
 exports.loadNetworkProvider = loadNetworkProvider;
 exports.normalize = normalize;
-exports.objects = objects;
 exports.toRawObject = toRawObject;
-exports.traverse = traverse;
-exports.util = util;
-exports.validate = validate;
-exports.validateSchema = validateSchema$1;
+exports.validSchemaProperty = validSchemaProperty;
+exports.validateData = validateData;
+exports.validatePopulate = validatePopulate;
+exports.validatePopulates = validatePopulates;
+exports.validateSchema = validateSchema;
+exports.validateSchemaProps = validateSchemaProps;
+exports.workerScriptPath = workerScriptPath;
+exports.wrapObject = wrapObject;

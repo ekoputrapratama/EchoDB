@@ -1,18 +1,31 @@
-import { b, C, D, L, o, e, S, a, l, n, t, d, u, v, c } from "./index-j5lBaDr1.js";
+import { b, C, D, L, c, S, T, k, m, a, r, o, j, i, u, q, p, l, n, t, d, h, f, g, v, e, s, w } from "./index-BLFV6BMf.js";
 export {
   b as CollectionProvider,
   C as CursorProvider,
   D as DatabaseProvider,
   L as ListenerCollection,
-  o as ObjectUtil,
-  e as Schema,
+  c as Schema,
   S as SyncProvider,
+  T as Table,
+  k as createWorker,
+  m as createWorkerImportScript,
   a as default,
+  r as isBrowser,
+  o as isDate,
+  j as isFirestoreTimestamp,
+  i as isInWorker,
+  u as isNestedQuery,
+  q as isNodejs,
+  p as isWorkerAvailable,
   l as loadNetworkProvider,
   n as normalizeSchemas,
   t as toRawObject,
-  d as traverse,
-  u as utils,
-  v as validate,
-  c as validateSchema
+  d as validSchemaProperty,
+  h as validateData,
+  f as validatePopulate,
+  g as validatePopulates,
+  v as validateSchema,
+  e as validateSchemaProps,
+  s as workerScriptPath,
+  w as wrapObject
 };
