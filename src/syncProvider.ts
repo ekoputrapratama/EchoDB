@@ -1,18 +1,15 @@
-import DatabaseProvider from './DatabaseProvider';
+import DatabaseProvider from './databaseProvider';
 import { EventEmitter } from 'eventemitter3';
 import EchoDB from './echodb';
-
-export type AuthOptions = {
-  username?: string;
-  email?: string;
-  password: string;
-}
+import { AuthOptions } from './types';
+import LockManager from './lockManager';
 
 export default abstract class SyncProvider extends EventEmitter {
   private _localAdapter: DatabaseProvider;
   dbName: string;
   schemas: any;
   context: EchoDB;
+  private lockManager: LockManager;
   abstract nextId(name: string): any;
   abstract start(): void;
   abstract stop(): void;

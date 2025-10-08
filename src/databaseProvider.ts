@@ -1,20 +1,7 @@
 import { EventEmitter } from 'eventemitter3';
 import EchoDB from './echodb';
-import SyncProvider from './SyncProvider';
-import { PopulateObject } from './utils/validate';
-
-export type DocumentObjectCondition = {
-  id?: string;
-  [key: string]: any;
-}
-
-export type DocumentObject = {
-  id?: any;
-  updatedAt?: number | Date;
-  createdAt?: number | Date;
-  update?: (data) => Promise<void>;
-  delete?: () => Promise<void>;
-}
+import SyncProvider from './syncProvider';
+import { DocumentObjectCondition, PopulateObject } from './types';
 
 export abstract class CursorProvider<T> {
   abstract get(): Promise<T>;
@@ -44,7 +31,7 @@ export default abstract class DatabaseProvider extends EventEmitter {
   options: any;
   syncAdapter: SyncProvider;
   private _context: EchoDB;
-  public abstract context: EchoDB;
+  public context: EchoDB;
   abstract collection<T>(name: string): CollectionProvider<T>;
   abstract close(): void;
   abstract drop(name?: string): Promise<any>;
