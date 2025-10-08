@@ -6,8 +6,8 @@ EchoDB is a modular JavaScript library for building fast, reliable, and develope
 ## 🚀 Features
 
 - [ ] ⚡ **Real-time sync** via WebSocket or QUIC
-- [ ]🧠 **Schema migration engine** with snapshot diffing
-- [ ]🕵️ **Forensic logging** for audit trails and debugging
+- [ ] 🧠 **Schema migration engine** with snapshot diffing
+- [ ] 🕵️ **Forensic logging** for audit trails and debugging
 - 🧩 **Modular architecture** with scoped npm packages
 - 🧵 **Concurrency-safe** sync logic using web workers
 
