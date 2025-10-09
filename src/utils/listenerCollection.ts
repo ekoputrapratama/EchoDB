@@ -140,7 +140,8 @@ export default class ListenerCollection {
    * @returns {Promise<any>}
    */
   fire(...args): Promise<any> {
-    // const self = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
 
     args = Array.prototype.slice.call(args, 0);
 
@@ -160,8 +161,8 @@ export default class ListenerCollection {
       return Promise.all(promises);
     }
 
-    function applyHook(l, hookArrayNane, outerArgs) {
-      this[hookArrayNane].forEach(function (p) {
+    function applyHook(l, hookArrayName, outerArgs) {
+      self[hookArrayName].forEach(function (p) {
         p.apply(l, outerArgs);
       });
     }
