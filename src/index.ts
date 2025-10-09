@@ -17,6 +17,7 @@ export {
 export * from './utils/objects';
 export * from './utils/util';
 export * from './utils/traverse';
+export * from './utils/formatter';
 export { default as ListenerCollection } from './utils/listenerCollection';
 export { loadNetworkProvider } from './network';
 export * from './types';
