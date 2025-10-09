@@ -1,4 +1,4 @@
-import { b, C, D, L, c, S, T, k, m, a, r, o, j, i, u, q, p, l, n, t, d, h, f, g, v, e, s, w } from "./index-BLFV6BMf.js";
+import { b, C, D, L, c, S, T, k, m, a, y, x, r, o, j, i, u, q, p, l, n, t, d, h, f, g, v, e, s, w } from "./index-COPo-pfl.js";
 export {
   b as CollectionProvider,
   C as CursorProvider,
@@ -10,6 +10,8 @@ export {
   k as createWorker,
   m as createWorkerImportScript,
   a as default,
+  y as formatDate,
+  x as formatNumber,
   r as isBrowser,
   o as isDate,
   j as isFirestoreTimestamp,

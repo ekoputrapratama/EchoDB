@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperties(exports, { __esModule: { value: true }, [Symbol.toStringTag]: { value: "Module" } });
-const index = require("./index-CLUaXSTe.cjs");
+const index = require("./index-D0qWv6Zh.cjs");
 exports.CollectionProvider = index.CollectionProvider;
 exports.CursorProvider = index.CursorProvider;
 exports.DatabaseProvider = index.DatabaseProvider;
@@ -11,6 +11,8 @@ exports.Table = index.Table;
 exports.createWorker = index.createWorker;
 exports.createWorkerImportScript = index.createWorkerImportScript;
 exports.default = index.EchoDB;
+exports.formatDate = index.formatDate;
+exports.formatNumber = index.formatNumber;
 exports.isBrowser = index.isBrowser;
 exports.isDate = index.isDate;
 exports.isFirestoreTimestamp = index.isFirestoreTimestamp;

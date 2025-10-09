@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const dns = require("dns");
-const index = require("./index-CLUaXSTe.cjs");
-class NetworkProvider extends index.EventEmitter {
+import dns from "dns";
+import { E as EventEmitter } from "./index-COPo-pfl.js";
+class NetworkProvider extends EventEmitter {
   constructor() {
     super();
     this.connected = navigator.onLine;
@@ -29,4 +27,6 @@ class NetworkProvider extends index.EventEmitter {
     }, 1e3);
   }
 }
-exports.default = NetworkProvider;
+export {
+  NetworkProvider as default
+};

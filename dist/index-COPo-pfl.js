@@ -4755,6 +4755,33 @@ function isNestedQuery(spec) {
     }
   });
 }
+function formatNumber(value, format2, separator) {
+  let str = value + "";
+  const splittedFormat = format2.split(separator);
+  const regex = new RegExp(
+    format2.replace("###", "(\\d{3})").replace("#", "(\\d+)").replace(separator, "")
+  );
+  const formatStr = splittedFormat.reduce((prev, next, index) => {
+    if (!prev) return `$${index + 1}`;
+    return prev + separator + `$${index + 1}`;
+  }, null);
+  while (regex.test(str)) {
+    str = str.replace(regex, formatStr);
+  }
+  return str;
+}
+function formatDate(value, format2) {
+  let date = value;
+  if (isDate(date)) {
+    date = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+  } else if (isFirestoreTimestamp(date)) {
+    const dt = date.toDate();
+    date = dt.getFullYear() + "/" + dt.getMonth() + "/" + dt.getDate();
+  } else if (hooks(value).format() !== "Invalid date") {
+    date = hooks(value);
+  }
+  return hooks(date, "YYYY/MM/DD").format(format2);
+}
 var eachSeries = { exports: {} };
 var eachLimit = { exports: {} };
 var eachOfLimit = { exports: {} };
@@ -5414,6 +5441,7 @@ class ListenerCollection {
    * @returns {Promise<any>}
    */
   fire(...args) {
+    const self2 = this;
     args = Array.prototype.slice.call(args, 0);
     const usePromises = args.length === 0 || !(typeof args[args.length - 1] === "function");
     function mapSeries(arr, iterator2) {
@@ -5425,8 +5453,8 @@ class ListenerCollection {
       });
       return Promise.all(promises);
     }
-    function applyHook(l, hookArrayNane, outerArgs) {
-      this[hookArrayNane].forEach(function(p) {
+    function applyHook(l, hookArrayName, outerArgs) {
+      self2[hookArrayName].forEach(function(p) {
         p.apply(l, outerArgs);
       });
     }
@@ -5470,9 +5498,9 @@ class ListenerCollection {
 async function loadNetworkProvider() {
   let module2;
   if (typeof window !== "undefined") {
-    module2 = await import("./browser-Bp2b9Fb6.js");
+    module2 = await import("./browser-C7jlq3lM.js");
   } else {
-    module2 = await import("./node-BSDwLvZY.js");
+    module2 = await import("./node-DpM5YbYa.js");
   }
   return module2;
 }
@@ -5508,5 +5536,7 @@ export {
   toRawObject as t,
   isNestedQuery as u,
   validateSchema as v,
-  wrapObject as w
+  wrapObject as w,
+  formatNumber as x,
+  formatDate as y
 };

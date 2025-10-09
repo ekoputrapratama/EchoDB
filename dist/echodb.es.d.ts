@@ -100,6 +100,19 @@ export declare type EventOptions = {
     fetchEventName?: string;
 };
 
+export declare function formatDate(value: any, format: string): string;
+
+/**
+ *
+ *
+ * @export
+ * @param {*} value
+ * @param {string} format
+ * @param {string} separator
+ * @return {*}
+ */
+export declare function formatNumber(value: any, format: string, separator: string): string;
+
 export declare function isBrowser(): any;
 
 export declare function isDate(value: any): boolean;
@@ -190,6 +203,10 @@ export declare type PopulateObject = {
     foreignField: string;
     ref: string;
     as?: string;
+};
+
+export declare type PopulateOptions = {
+    skipValidation: boolean;
 };
 
 export declare class Schema {

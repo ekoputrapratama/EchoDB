@@ -1,6 +1,8 @@
-import dns from "dns";
-import { E as EventEmitter } from "./index-BLFV6BMf.js";
-class NetworkProvider extends EventEmitter {
+"use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const dns = require("dns");
+const index = require("./index-D0qWv6Zh.cjs");
+class NetworkProvider extends index.EventEmitter {
   constructor() {
     super();
     this.connected = navigator.onLine;
@@ -27,6 +29,4 @@ class NetworkProvider extends EventEmitter {
     }, 1e3);
   }
 }
-export {
-  NetworkProvider as default
-};
+exports.default = NetworkProvider;
