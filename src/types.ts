@@ -19,6 +19,9 @@ export type PopulateObject = {
   ref: string;
   as?: string;
 };
+export type PopulateOptions = {
+  skipValidation: boolean;
+};
 
 export type EventOptions = {
   /**
